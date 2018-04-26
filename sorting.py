@@ -43,8 +43,45 @@ def quick_sort(array):
 
 
 def heap_sort(array):
-    pass
+    sl = len(array)
+
+    def swap(pi, ci):
+        if array[pi] < array[ci]:
+            array[pi], array[ci] = array[ci], array[pi]
+
+    def sift(pi, unsorted):
+        i_gt = lambda a, b: a if array[a] > array[b] else b
+        while pi * 2 + 2 < unsorted:
+            gtci = i_gt(pi * 2 + 1, pi * 2 + 2)
+            swap(pi, gtci)
+            pi = gtci
+
+    # heapify
+    for i in range((sl // 2) - 1, -1, -1):
+        sift(i, sl)
+    # sort
+    for i in range(sl - 1, 0, -1):
+        swap(i, 0)
+        sift(0, i)
+    return array
 
 
 def merge_sort(array):
-    pass
+    def merge(left, right):
+        lst = []
+        while left and right:
+            if left[0] < right[0]:
+                lst.append(left.pop(0))
+            else:
+                lst.append(right.pop(0))
+        if left:
+            lst.extend(left)
+        if right:
+            lst.extend(right)
+        return lst
+
+    length = len(array)
+    if length >= 2:
+        mid = int(length / 2)
+        array = merge(merge_sort(array[:mid]), merge_sort(array[mid:]))
+    return array

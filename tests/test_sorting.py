@@ -9,3 +9,5 @@ class TestSelectionSort:
         assert sorting.selection_sort(array) == sorted_array
         assert sorting.shell_sort(array) == sorted_array
         assert sorting.quick_sort(array) == sorted_array
+        assert sorting.heap_sort(array) == sorted_array
+        assert sorting.merge_sort(array) == sorted_array
