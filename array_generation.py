@@ -11,10 +11,13 @@ class Generator:
             random_array.append(random.random())
         return random_array
 
-    def best_selection_and_sorting_array(self):
+    def best_selection_and_shell_sorting_array(self):
         array = self.random_array()
         array.sort()
         return array
 
     def worse_selection_and_sorting_array(self):
-        return self.best_selection_and_sorting_array().reverse()
+        return self.best_selection_and_shell_sorting_array().reverse()
+
+    def best_quick_sorting_array(self):
+        array = []
