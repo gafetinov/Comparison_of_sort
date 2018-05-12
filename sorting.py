@@ -1,7 +1,7 @@
 import math
 
 
-def selection_sort(array):
+def quadratic_sort(array):
     for i in range(len(array)):
         index = i
         min = array[i]

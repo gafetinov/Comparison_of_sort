@@ -4,7 +4,7 @@ import random
 
 
 def main():
-    functions = (sorting.merge_sort, sorting.selection_sort,
+    functions = (sorting.merge_sort, sorting.quadratic_sort,
                  sorting.shell_sort, sorting.quick_sort,
                  sorting.heap_sort)
     count = 100
@@ -24,7 +24,6 @@ def main():
                     for element in times:
                         standard_deviation += (element-average_time)**2
                     standard_deviation = (standard_deviation/(len(times) - 1))**0.5
-            delta =
             file.write('{} {} {}\n'.format(function.__name__,
                                            count,
                                            average_time))
