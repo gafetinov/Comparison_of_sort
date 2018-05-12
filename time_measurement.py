@@ -5,8 +5,7 @@ import random
 
 def main():
     functions = (sorting.merge_sort, sorting.quadratic_sort,
-                 sorting.shell_sort, sorting.quick_sort,
-                 sorting.heap_sort)
+                 sorting.shell_sort, sorting.quick_sort)
     count = 100
     file = open('result.txt', 'w')
     while count < 200:
