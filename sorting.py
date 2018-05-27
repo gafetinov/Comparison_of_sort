@@ -121,7 +121,7 @@ def bin_insert_sort(array, start, end, key=standard_key):
             x = array[i]
             left = 0
             right = i-1
-            while left > right:
+            while left <= right:
                 mid = (left+right)//2
                 if array[mid] < x:
                     left = mid+1

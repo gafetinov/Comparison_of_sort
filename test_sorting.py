@@ -1,7 +1,8 @@
 import sorting
 import random
 SORTINGS = (sorting.selection_sort, sorting.quick_sort, sorting.shell_sort,
-            sorting.heap_sort, sorting.merge_sort, sorting.insertion_sort)
+            sorting.heap_sort, sorting.merge_sort, sorting.insertion_sort,
+            sorting.bin_insert_sort)
 
 
 class TestSortings:
@@ -20,7 +21,7 @@ class TestSortings:
         return array
 
     def test_bin(self):
-        array = [3, 1, 4, 0, 28, -1]
+        array = [12, 214, 32, 4, 223, 2, 3, 2, 3, 23, 3, 364, 34]
         sorted_array = list(array)
         sorted_array.sort()
         lst = list(array)
