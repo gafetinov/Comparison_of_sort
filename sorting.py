@@ -16,8 +16,11 @@ def selection_sort(array, start, end, key=standard_key):
         array[i], array[index] = array[index], array[i]
 
 
-def shell_sort(array, start, end, key=standard_key, offsets=None):
-    step = (end-start+1)//2
+def shell_sort(array, start, end, key=standard_key, offset=0):
+    if offset > 0:
+        step = offset
+    else:
+        step = (end-start+1)//2
     while step >= 1:
         for i in range(start, end-step+1):
             j = i
@@ -25,17 +28,6 @@ def shell_sort(array, start, end, key=standard_key, offsets=None):
                 array[j], array[j+step] = array[j+step], array[j]
                 j -= 1
         step //= 2
-
-
-def hibbard_seq(n):
-    current_step = 1
-    steps = [current_step]
-    i = 2
-    while current_step <= n:
-        current_step = 2**i - 1
-        steps.append(current_step)
-        i += 1
-    return steps
 
 
 def quick_sort(array, start, end, key=standard_key):
@@ -59,27 +51,28 @@ def quick_sort(array, start, end, key=standard_key):
         quick_sort(array, left, end, key)
 
 
-def heap_sort(array, start, end, key=standard_key):
-    sl = len(array)
+def heap_sort(array, start, end, key=standard_key)
+    def get_larger(a, b):
+        if key(array[a] > key(array[b])):
+            return a
+        else:
+            return b
+    def heapify(index, unsorted):
+        while index * 2 + 2 < unsorted:
+            largest = get_larger(index * 2 + 1, index * 2 + 2)
+            if key(array[index]) < key(array[largest]):
+                array[index], array[largest] = array[largest], array[index]
+            index = largest
 
-    def swap(pi, ci):
-        if key(array[pi]) < key(array[ci]):
-            array[pi], array[ci] = array[ci], array[pi]
-
-    def sift(pi, unsorted):
-        i_gt = lambda a, b: a if key(array[a]) > key(array[b]) else b
-        while pi * 2 + 2 < unsorted:
-            gtci = i_gt(pi * 2 + 1, pi * 2 + 2)
-            swap(pi, gtci)
-            pi = gtci
-
+    n = len(array)
     # heapify
-    for i in range((sl // 2) - 1, -1, -1):
-        sift(i, sl)
+    for i in range((n//2)-1, -1, -1):
+        heapify(i, n)
     # sort
-    for i in range(sl - 1, 0, -1):
-        swap(i, 0)
-        sift(0, i)
+    for i in range(n - 1, 0, -1):
+        if key(array[i]) < key(array[0]):
+            array[i], array[0] = array[0], array[i]
+        heapify(0, i)
 
 
 def merge_sort(array, start, end, key=standard_key):
@@ -117,13 +110,13 @@ def insertion_sort(array, start, end, key=standard_key):
 
 def bin_insert_sort(array, start, end, key=standard_key):
     for i in range(1, end+1):
-        if array[i-1] > array[i]:
+        if key(array[i-1]) > key(array[i]):
             x = array[i]
             left = 0
             right = i-1
             while left <= right:
                 mid = (left+right)//2
-                if array[mid] < x:
+                if key(array[mid]) < key(x):
                     left = mid+1
                 else:
                     right = mid-1

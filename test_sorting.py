@@ -25,7 +25,7 @@ class TestSortings:
         sorted_array = list(array)
         sorted_array.sort()
         lst = list(array)
-        sorting.bin_insert_sort(lst, 0, len(lst)-1)
+        sorting.shell_sort(lst, 0, len(lst)-1, offset=39)
         assert lst == sorted_array
 
     def test_empty(self):
