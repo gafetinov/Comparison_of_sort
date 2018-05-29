@@ -44,6 +44,11 @@ class TestSortings:
         array = self.get_random_array()
         self.check_sortings(array)
 
+    def test_sorted(self):
+        array = self.get_random_array()
+        array.sort()
+        self.check_sortings(array)
+
     def test_reversed(self):
         array = self.get_random_array()
         array.sort(reverse=True)

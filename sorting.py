@@ -57,6 +57,7 @@ def heap_sort(array, start, end, key=standard_key):
             return a
         else:
             return b
+
     def heapify(index, unsorted):
         while index * 2 + 2 < unsorted:
             largest = get_larger(index * 2 + 1, index * 2 + 2)
@@ -111,16 +112,16 @@ def insertion_sort(array, start, end, key=standard_key):
 def bin_insert_sort(array, start, end, key=standard_key):
     for i in range(1, end+1):
         if key(array[i-1]) > key(array[i]):
-            x = array[i]
+            elem = array[i]
             left = 0
             right = i-1
             while left <= right:
                 mid = (left+right)//2
-                if key(array[mid]) < key(x):
+                if key(array[mid]) < key(elem):
                     left = mid+1
                 else:
                     right = mid-1
             for j in range(i-1, left-1, -1):
                 array[j+1] = array[j]
-            array[left] = x
+            array[left] = elem
 # All sorting is inplace
