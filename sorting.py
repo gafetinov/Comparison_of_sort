@@ -51,7 +51,7 @@ def quick_sort(array, start, end, key=standard_key):
         quick_sort(array, left, end, key)
 
 
-def heap_sort(array, start, end, key=standard_key)
+def heap_sort(array, start, end, key=standard_key):
     def get_larger(a, b):
         if key(array[a] > key(array[b])):
             return a
