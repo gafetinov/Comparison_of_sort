@@ -1,11 +1,9 @@
 import math
 
 
-def standard_key(x):
-    return x
-
-
-def selection_sort(array, start, end, key=standard_key):
+def selection_sort(array, key=lambda x: x):
+    start = 0
+    end = len(array)-1
     for i in range(start, end+1):
         index = i
         min = array[i]
@@ -16,11 +14,10 @@ def selection_sort(array, start, end, key=standard_key):
         array[i], array[index] = array[index], array[i]
 
 
-def shell_sort(array, start, end, key=standard_key, offset=0):
-    if offset > 0:
-        step = offset
-    else:
-        step = (end-start+1)//2
+def shell_sort(array, key=lambda x: x):
+    start = 0
+    end = len(array)-1
+    step = (end-start+1)//2
     while step >= 1:
         for i in range(start, end-step+1):
             j = i
@@ -30,28 +27,43 @@ def shell_sort(array, start, end, key=standard_key, offset=0):
         step //= 2
 
 
-def quick_sort(array, start, end, key=standard_key):
-    if end-start < 1:
-        return
-    left = start
-    right = end
-    pivot = array[(left+right)//2]
-    while left <= right:
-        while key(array[left]) < key(pivot):
-            left += 1
-        while key(array[right]) > key(pivot):
-            right -= 1
-        if left <= right:
-            array[left], array[right] = array[right], array[left]
-            left += 1
-            right -= 1
-    if right > start:
-        quick_sort(array, start, right, key)
-    if end > left:
-        quick_sort(array, left, end, key)
+def shell_sort_hib(array, key=lambda x: x):
+    pass
 
 
-def heap_sort(array, start, end, key=standard_key):
+def shell_sort_sedgwick(array, key=lambda x: x):
+    pass
+
+
+def shell_sort_pratt(array, key=lambda x: x):
+    pass
+
+
+def quick_sort(array, key=lambda x: x):
+    def quick(start, end):
+        if end - start < 1:
+            return
+        left = start
+        right = end
+        pivot = array[(left + right) // 2]
+        while left <= right:
+            while key(array[left]) < key(pivot):
+                left += 1
+            while key(array[right]) > key(pivot):
+                right -= 1
+            if left <= right:
+                array[left], array[right] = array[right], array[left]
+                left += 1
+                right -= 1
+        if right > start:
+            quick(start, right)
+        if end > left:
+            quick(left, end)
+
+    quick(0, len(array)-1)
+
+
+def heap_sort(array, key=lambda x: x):
     def get_larger(a, b):
         if key(array[a] > key(array[b])):
             return a
@@ -76,7 +88,7 @@ def heap_sort(array, start, end, key=standard_key):
         heapify(0, i)
 
 
-def merge_sort(array, start, end, key=standard_key):
+def merge_sort(array, key=lambda x: x):
     def merge(array, start, mid, end):
         left = array[start:mid]
         right = array[mid:end]
@@ -91,15 +103,18 @@ def merge_sort(array, start, end, key=standard_key):
                 array[l] = right[j]
                 j = j + 1
 
-    end += 1
-    if end - start > 1:
-        mid = (start + end) // 2
-        merge_sort(array, start, mid-1, key)
-        merge_sort(array, mid, end-1, key)
-        merge(array, start, mid, end)
+    def do_sorting(start, end):
+        end += 1
+        if end - start > 1:
+            mid = (start + end) // 2
+            do_sorting(start, mid-1)
+            do_sorting(mid, end-1)
+            merge(array, start, mid, end)
+
+    do_sorting(0, len(array)-1)
 
 
-def insertion_sort(array, start, end, key=standard_key):
+def insertion_sort(array, key=lambda x: x):
     for i in range(1, len(array)):
         elem = array[i]
         j = i - 1
@@ -109,8 +124,9 @@ def insertion_sort(array, start, end, key=standard_key):
         array[j + 1] = elem
 
 
-def bin_insert_sort(array, start, end, key=standard_key):
-    for i in range(1, end+1):
+def bin_insert_sort(array, key=lambda x: x):
+    end = len(array)
+    for i in range(1, end):
         if key(array[i-1]) > key(array[i]):
             elem = array[i]
             left = 0

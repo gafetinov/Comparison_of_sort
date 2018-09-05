@@ -1,7 +1,7 @@
 import sorting
 import random
-SORTINGS = (sorting.selection_sort, sorting.quick_sort, sorting.shell_sort,
-            sorting.heap_sort, sorting.merge_sort, sorting.insertion_sort,
+SORTINGS = (sorting.selection_sort, sorting.shell_sort, sorting.quick_sort,
+            sorting.heap_sort, sorting.insertion_sort, sorting.merge_sort,
             sorting.bin_insert_sort)
 
 
@@ -11,7 +11,7 @@ class TestSortings:
         sorted_array.sort()
         for sorting in SORTINGS:
             arr = list(array)
-            sorting(arr, 0, len(arr)-1)
+            sorting(arr)
             assert arr == sorted_array
 
     def get_random_array(self):
@@ -25,7 +25,7 @@ class TestSortings:
         sorted_array = list(array)
         sorted_array.sort()
         lst = list(array)
-        sorting.shell_sort(lst, 0, len(lst)-1, offset=39)
+        sorting.shell_sort(lst)
         assert lst == sorted_array
 
     def test_empty(self):
@@ -65,4 +65,4 @@ class TestSortings:
             for j in range(random.randint(0, 10000)):
                 string.join(chr(random.randint(33, 125)))
             array.append(string)
-        self.check_sortings(array)
+        self.check_sortings(array)  
