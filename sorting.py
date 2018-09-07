@@ -28,15 +28,66 @@ def shell_sort(array, key=lambda x: x):
 
 
 def shell_sort_hib(array, key=lambda x: x):
-    pass
+    start = 0
+    end = len(array)
+    if end == 0:
+        return
+    step = 2**math.floor(math.log2(end-start))-1
+    while step >= 1:
+        for i in range(start, end-step):
+            j = i
+            while j >= start and key(array[j]) > key(array[j + step]):
+                array[j], array[j + step] = array[j + step], array[j]
+                j -= 1
+        step = (step+1)//2-1
 
 
-def shell_sort_sedgwick(array, key=lambda x: x):
-    pass
+def shell_sort_sedgewick(array, key=lambda x: x):
+    start = 0
+    end = len(array)
+    if end < 2:
+        return
+    steps = []
+    k = 1
+    current_step = 1
+    while 3*current_step <= end:
+        steps.append(current_step)
+        if k % 2 == 1:
+            current_step = 8*2**k - 6*2**((k+1)//2) + 1
+        elif k % 2 == 0:
+            current_step = 9*2**k - 9*2**(k//2) + 1
+        k += 1
+    for index in range(len(steps)-1, -1, -1):
+        for i in range(start, end-steps[index]):
+            j = i
+            while j >= start and key(array[j]) > key(array[j + steps[index]]):
+                array[j], array[j + steps[index]] = \
+                    array[j + steps[index]], array[j]
+                j -= 1
 
 
 def shell_sort_pratt(array, key=lambda x: x):
-    pass
+    def get_pratt_seq(max):
+        i = 0
+        seq = []
+        while 3**i <= max:
+            current_el = 3**i
+            while current_el <= max:
+                seq.append(current_el)
+                current_el *= 2
+            i += 1
+        return sorted(seq)
+
+    start = 0
+    end = len(array)
+    steps = get_pratt_seq(end / 2)
+    for index in range(len(steps)-1, -1, -1):
+        for i in range(start, end-steps[index]):
+            j = i
+            while j >= start and key(array[j]) > key(array[j + steps[index]]):
+                array[j], array[j + steps[index]] = \
+                    array[j + steps[index]], array[j]
+                j -= 1
 
 
 def quick_sort(array, key=lambda x: x):

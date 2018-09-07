@@ -1,7 +1,9 @@
 import sorting
 import random
-SORTINGS = (sorting.selection_sort, sorting.shell_sort, sorting.quick_sort,
-            sorting.heap_sort, sorting.insertion_sort, sorting.merge_sort,
+SORTINGS = (sorting.selection_sort, sorting.shell_sort,
+            sorting.shell_sort_hib, sorting.shell_sort_sedgewick,
+            sorting.shell_sort_pratt, sorting.quick_sort, sorting.heap_sort,
+            sorting.insertion_sort, sorting.merge_sort,
             sorting.bin_insert_sort)
 
 
