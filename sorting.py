@@ -1,7 +1,14 @@
 import math
 
+C0MPARISON_COUNT = 0
+PERMISSION_COUNT = 0
+
 
 def selection_sort(array, key=lambda x: x):
+    global C0MPARISON_COUNT
+    global PERMISSION_COUNT
+    C0MPARISON_COUNT = 0
+    PERMISSION_COUNT = 0
     start = 0
     end = len(array)-1
     for i in range(start, end+1):
@@ -11,10 +18,16 @@ def selection_sort(array, key=lambda x: x):
             if key(array[j]) < key(min):
                 min = array[j]
                 index = j
+            C0MPARISON_COUNT += 1
         array[i], array[index] = array[index], array[i]
+        PERMISSION_COUNT += 1
 
 
 def shell_sort(array, key=lambda x: x):
+    global C0MPARISON_COUNT
+    global PERMISSION_COUNT
+    C0MPARISON_COUNT = 0
+    PERMISSION_COUNT = 0
     start = 0
     end = len(array)-1
     step = (end-start+1)//2
@@ -23,11 +36,18 @@ def shell_sort(array, key=lambda x: x):
             j = i
             while j >= start and key(array[j]) > key(array[j+step]):
                 array[j], array[j+step] = array[j+step], array[j]
+                C0MPARISON_COUNT += 1
+                PERMISSION_COUNT += 1
                 j -= 1
+            C0MPARISON_COUNT += 1
         step //= 2
 
 
 def shell_sort_hib(array, key=lambda x: x):
+    global C0MPARISON_COUNT
+    global PERMISSION_COUNT
+    C0MPARISON_COUNT = 0
+    PERMISSION_COUNT = 0
     start = 0
     end = len(array)
     if end == 0:
@@ -38,11 +58,18 @@ def shell_sort_hib(array, key=lambda x: x):
             j = i
             while j >= start and key(array[j]) > key(array[j + step]):
                 array[j], array[j + step] = array[j + step], array[j]
+                C0MPARISON_COUNT += 1
+                PERMISSION_COUNT += 1
                 j -= 1
+            C0MPARISON_COUNT += 1
         step = (step+1)//2-1
 
 
 def shell_sort_sedgewick(array, key=lambda x: x):
+    global C0MPARISON_COUNT
+    global PERMISSION_COUNT
+    C0MPARISON_COUNT = 0
+    PERMISSION_COUNT = 0
     start = 0
     end = len(array)
     if end < 2:
@@ -63,7 +90,10 @@ def shell_sort_sedgewick(array, key=lambda x: x):
             while j >= start and key(array[j]) > key(array[j + steps[index]]):
                 array[j], array[j + steps[index]] = \
                     array[j + steps[index]], array[j]
+                PERMISSION_COUNT += 1
+                C0MPARISON_COUNT += 1
                 j -= 1
+            C0MPARISON_COUNT += 1
 
 
 def shell_sort_pratt(array, key=lambda x: x):
@@ -78,6 +108,10 @@ def shell_sort_pratt(array, key=lambda x: x):
             i += 1
         return sorted(seq)
 
+    global C0MPARISON_COUNT
+    global PERMISSION_COUNT
+    C0MPARISON_COUNT = 0
+    PERMISSION_COUNT = 0
     start = 0
     end = len(array)
     steps = get_pratt_seq(end / 2)
@@ -87,11 +121,16 @@ def shell_sort_pratt(array, key=lambda x: x):
             while j >= start and key(array[j]) > key(array[j + steps[index]]):
                 array[j], array[j + steps[index]] = \
                     array[j + steps[index]], array[j]
+                PERMISSION_COUNT += 1
+                C0MPARISON_COUNT += 1
                 j -= 1
+            C0MPARISON_COUNT += 1
 
 
 def quick_sort(array, key=lambda x: x):
     def quick(start, end):
+        global C0MPARISON_COUNT
+        global PERMISSION_COUNT
         if end - start < 1:
             return
         left = start
@@ -100,10 +139,14 @@ def quick_sort(array, key=lambda x: x):
         while left <= right:
             while key(array[left]) < key(pivot):
                 left += 1
+                C0MPARISON_COUNT += 1
             while key(array[right]) > key(pivot):
                 right -= 1
+                C0MPARISON_COUNT += 1
             if left <= right:
                 array[left], array[right] = array[right], array[left]
+                C0MPARISON_COUNT += 2
+                PERMISSION_COUNT += 1
                 left += 1
                 right -= 1
         if right > start:
@@ -111,6 +154,10 @@ def quick_sort(array, key=lambda x: x):
         if end > left:
             quick(left, end)
 
+    global C0MPARISON_COUNT
+    global PERMISSION_COUNT
+    C0MPARISON_COUNT = 0
+    PERMISSION_COUNT = 0
     quick(0, len(array)-1)
 
 
@@ -122,12 +169,21 @@ def heap_sort(array, key=lambda x: x):
             return b
 
     def heapify(index, unsorted):
+        global C0MPARISON_COUNT
+        global PERMISSION_COUNT
         while index * 2 + 2 < unsorted:
             largest = get_larger(index * 2 + 1, index * 2 + 2)
+            C0MPARISON_COUNT += 1
             if key(array[index]) < key(array[largest]):
                 array[index], array[largest] = array[largest], array[index]
+                PERMISSION_COUNT += 1
             index = largest
+            C0MPARISON_COUNT += 1
 
+    global C0MPARISON_COUNT
+    global PERMISSION_COUNT
+    C0MPARISON_COUNT = 0
+    PERMISSION_COUNT = 0
     n = len(array)
     # heapify
     for i in range((n//2)-1, -1, -1):
@@ -136,11 +192,15 @@ def heap_sort(array, key=lambda x: x):
     for i in range(n - 1, 0, -1):
         if key(array[i]) < key(array[0]):
             array[i], array[0] = array[0], array[i]
+            PERMISSION_COUNT += 1
+        C0MPARISON_COUNT += 1
         heapify(0, i)
 
 
 def merge_sort(array, key=lambda x: x):
     def merge(array, start, mid, end):
+        global PERMISSION_COUNT
+        global C0MPARISON_COUNT
         left = array[start:mid]
         right = array[mid:end]
         i = 0
@@ -153,6 +213,8 @@ def merge_sort(array, key=lambda x: x):
             else:
                 array[l] = right[j]
                 j = j + 1
+            C0MPARISON_COUNT += 1
+            PERMISSION_COUNT += 1
 
     def do_sorting(start, end):
         end += 1
@@ -162,20 +224,36 @@ def merge_sort(array, key=lambda x: x):
             do_sorting(mid, end-1)
             merge(array, start, mid, end)
 
+    global C0MPARISON_COUNT
+    global PERMISSION_COUNT
+    C0MPARISON_COUNT = 0
+    PERMISSION_COUNT = 0
     do_sorting(0, len(array)-1)
 
 
 def insertion_sort(array, key=lambda x: x):
+    global C0MPARISON_COUNT
+    global PERMISSION_COUNT
+    C0MPARISON_COUNT = 0
+    PERMISSION_COUNT = 0
     for i in range(1, len(array)):
         elem = array[i]
         j = i - 1
         while (j > -1) and key(elem) < key(array[j]):
             array[j + 1] = array[j]
+            C0MPARISON_COUNT += 1
+            PERMISSION_COUNT += 1
             j = j - 1
+        C0MPARISON_COUNT += 1
         array[j + 1] = elem
+        PERMISSION_COUNT += 1
 
 
 def bin_insert_sort(array, key=lambda x: x):
+    global C0MPARISON_COUNT
+    global PERMISSION_COUNT
+    C0MPARISON_COUNT = 0
+    PERMISSION_COUNT = 0
     end = len(array)
     for i in range(1, end):
         if key(array[i-1]) > key(array[i]):
@@ -188,7 +266,11 @@ def bin_insert_sort(array, key=lambda x: x):
                     left = mid+1
                 else:
                     right = mid-1
+                C0MPARISON_COUNT += 1
             for j in range(i-1, left-1, -1):
                 array[j+1] = array[j]
+                PERMISSION_COUNT += 1
             array[left] = elem
+            PERMISSION_COUNT += 1
+        C0MPARISON_COUNT += 1
 # All sorting is inplace
