@@ -67,4 +67,16 @@ class TestSortings:
             for j in range(random.randint(0, 10000)):
                 string.join(chr(random.randint(33, 125)))
             array.append(string)
-        self.check_sortings(array)  
+        self.check_sortings(array)
+
+    def test_best_way(self):
+        array = []
+        for i in range(100):
+            array.append(i)
+        self.check_sortings(array)
+
+    def test_worst_way(self):
+        array = []
+        for i in range(100, -1, -1):
+            array.append(i)
+        self.check_sortings(array)
