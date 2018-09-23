@@ -2,7 +2,7 @@ import sorting
 import time
 import random
 import copy
-import data
+from data import Data
 
 
 class Researh:
@@ -11,9 +11,9 @@ class Researh:
                                  "shell_sedgewick", "shell_pratt", "quick",
                                  "heap", "insertion", "merge", "bin_insert",
                                  "sorted"),
-                 arrays_lengths=(1000,),
+                 arrays_lengths=(1000, 2000, 3000, 4000, 5000),
                  data_types=("random",)):
-        self.data = []
+        self.functions_data = {}
         self.function_names = function_names
         self.array_lens = arrays_lengths
         self.data_types = data_types
@@ -41,10 +41,12 @@ class Researh:
             return self.get_random_array(length)
 
     def check(self):
-        for length in self.array_lens:
+        for function in self.functions:
+            dict_by_type = {}
             for data_type in self.data_types:
-                random_array = self.get_array(data_type, length)
-                for function in self.functions:
+                dict_by_length = {}
+                for length in self.array_lens:
+                    random_array = self.get_array(data_type, length)
                     times = []
                     standard_deviation = 1
                     average_time = 1
@@ -60,14 +62,11 @@ class Researh:
                             for element in times:
                                 standard_deviation += (element-average_time)**2
                             standard_deviation = (standard_deviation/(len(times)-1))**0.5
-                    self.data.append(data.Data(function=function.__name__,
-                                               count=length,
-                                               time=average_time,
-                                               comparisons_count=sorting.
-                                               C0MPARISON_COUNT,
-                                               permissions_count=sorting.
-                                               PERMISSION_COUNT,
-                                               type=data_type))
+                    dict_by_length[length] = Data(average_time,
+                                                  sorting.PERMISSION_COUNT,
+                                                  sorting.C0MPARISON_COUNT)
+                dict_by_type[data_type] = dict_by_length
+            self.functions_data[function.__name__] = dict_by_type
 
     def get_random_array(self, count):
         array = []
@@ -79,6 +78,3 @@ class Researh:
         start_time = time.time()
         func(array)
         return time.time() - start_time
-
-    def get_dates(self):
-        return self.data
