@@ -11,7 +11,7 @@ class Researh:
                                  "shell_sedgewick", "shell_pratt", "quick",
                                  "heap", "insertion", "merge", "bin_insert",
                                  "sorted"),
-                 arrays_lengths=(1000, 2000, 3000, 4000, 5000),
+                 arrays_lengths=(2000, 3000, 4000, 5000),
                  data_types=("random",)):
         self.functions_data = {}
         self.function_names = function_names
@@ -39,6 +39,10 @@ class Researh:
     def get_array(self, type, length):
         if type == "random":
             return self.get_random_array(length)
+        elif type == "best":
+            return self.get_best_array(length)
+        elif type == "worst":
+            return self.get_worst_array(length)
 
     def check(self):
         for function in self.functions:
@@ -46,12 +50,12 @@ class Researh:
             for data_type in self.data_types:
                 dict_by_length = {}
                 for length in self.array_lens:
-                    random_array = self.get_array(data_type, length)
+                    array = self.get_array(data_type, length)
                     times = []
                     standard_deviation = 1
                     average_time = 1
                     while(standard_deviation/average_time >= 0.05):
-                        array = copy.deepcopy(random_array)
+                        array = copy.deepcopy(array)
                         time_work = self.notify_time(function, array)
                         if time_work == 0:
                             continue
@@ -60,8 +64,10 @@ class Researh:
                             standard_deviation = 0
                             average_time = sum(times)/len(times)
                             for element in times:
-                                standard_deviation += (element-average_time)**2
-                            standard_deviation = (standard_deviation/(len(times)-1))**0.5
+                                standard_deviation += \
+                                    (element-average_time)**2
+                            standard_deviation = \
+                                (standard_deviation/(len(times)-1))**0.5
                     dict_by_length[length] = Data(average_time,
                                                   sorting.PERMISSION_COUNT,
                                                   sorting.C0MPARISON_COUNT)
@@ -73,6 +79,12 @@ class Researh:
         for i in range(count):
             array.append(random.random())
         return array
+
+    def get_best_array(self, count):
+        return [x for x in range(count)]
+
+    def get_worst_array(self, count):
+        return [x for x in range(count, -1, -1)]
 
     def notify_time(self, func, array):
         start_time = time.time()

@@ -69,14 +69,8 @@ class TestSortings:
             array.append(string)
         self.check_sortings(array)
 
-    def test_best_way(self):
-        array = []
-        for i in range(100):
-            array.append(i)
-        self.check_sortings(array)
-
     def test_worst_way(self):
-        array = []
-        for i in range(100, -1, -1):
-            array.append(i)
-        self.check_sortings(array)
+        self.check_sortings([x for x in range(100, -1, -1)])
+
+    def test_best_way(self):
+        self.check_sortings([x for x in range(100)])

@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
-import numpy
-import math
+import numpy as np
+from scipy.interpolate import spline
 
 
 class Diagram:
@@ -8,14 +8,20 @@ class Diagram:
         self.data = data
 
     def draw(self):
-        if len(self.data) == 1:
-            pass
-        elif len(self.data) > 1:
+        if len(self.data) >= 1:
             for function in self.data:
                 for data_type in self.data[function]:
-                    plt.plot(sorted(self.get_times(list(self.data[function][data_type].values()))),
-                             sorted(list(self.data[function][data_type].keys())),
-                             label=function)
+                    x = np.array(
+                        sorted(
+                            self.get_times(
+                                list(
+                                    self.data[function]
+                                    [data_type].values()))))
+                    y = np.array(
+                        sorted(list(self.data[function][data_type].keys())))
+                    xnew = np.linspace(x.min(), x.max(), 300)
+                    ynew = spline(x, y, xnew)
+                    plt.plot(xnew, ynew, label=function)
         plt.xlabel('Time')
         plt.ylabel('Count')
         plt.legend()
