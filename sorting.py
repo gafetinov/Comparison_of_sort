@@ -207,7 +207,8 @@ def merge_sort(array, key=lambda x: x):
         j = 0
         k = start
         for l in range(k, end):
-            if j >= len(right) or (i < len(left) and key(left[i]) < key(right[j])):
+            if j >= len(right) or \
+                    (i < len(left) and key(left[i]) < key(right[j])):
                 array[l] = left[i]
                 i = i + 1
             else:

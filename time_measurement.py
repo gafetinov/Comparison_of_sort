@@ -5,7 +5,7 @@ import copy
 from data import Data
 
 
-class Researh:
+class Research:
     def __init__(self,
                  function_names=("selection", "shell", "shell_hib",
                                  "shell_sedgewick", "shell_pratt", "quick",

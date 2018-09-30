@@ -19,9 +19,9 @@ def main():
             counts.append(int(string))
         print("Enter types of data('best', 'worst', 'random') with a space:")
         types = input().split()
-        research = time_measurement.Researh(functions, counts, types)
+        research = time_measurement.Research(functions, counts, types)
     else:
-        research = time_measurement.Researh()
+        research = time_measurement.Research()
     research.check()
     diagram = Diagram(research.functions_data)
     diagram.draw()
